@@ -1,34 +1,32 @@
 pkgname=luastatus-git
 pkgver=r139.163ce5e
 pkgrel=1
-pkgdesc='Generates status bar to use with dzen2 or wmii'
+pkgdesc='luastatus is a universal status bar content generator'
 arch=('x86_64')
 url='https://github.com/shdown/luastatus'
-license=('LGPL-3.0')
-depends=('lua' 'libx11' 'libxcb' 'alsa-lib' 'yajl>=2.1.0' 'xcb-util-wm')
+license=('LGPL3')
+depends=('lua' 'libx11' 'bash' 'alsa-lib' 'yajl>=2.1.0' 'xcb-util-wm')
 makedepends=('git' 'pkgconfig')
 options=('docs')
 conflicts=('luastatus')
-provides=('luastatus-i3-wrapper' 'luastatus-lemonbar-launcher' 'luastatus')
+provides=('luastatus')
 source=(git+https://github.com/shdown/luastatus)
 sha1sums=('SKIP')
 
-_gitname='luastatus'
-
 pkgver() {
-  cd "`echo $pkgname|sed -e s/-git//`"
+  cd ${pkgname%-git}
   printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {
-  cd "${srcdir}/${_gitname}"
+  cd "${srcdir}/${pkgname%-git}"
   cmake .
   make
 }
 
 package() {
-  cd "${srcdir}/${_gitname}"
+  cd "${srcdir}/${pkgname%-git}"
   make DESTDIR="$pkgdir" install
-  install -Dm644 LICENSE.txt "$pkgdir/usr/share/licenses/`echo $pkgname|sed -e s/-git//`/LICENSE.txt"
+  install -Dm644 LICENSE.txt "$pkgdir/usr/share/licenses/${pkgname%-git}/LICENSE.txt"
   make clean
 }
