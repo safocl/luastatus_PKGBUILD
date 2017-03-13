@@ -6,7 +6,7 @@ arch=('x86_64')
 url='https://github.com/shdown/luastatus'
 license=('LGPL3')
 depends=('lua' 'libx11' 'bash' 'alsa-lib' 'yajl>=2.1.0' 'xcb-util-wm')
-makedepends=('git' 'pkg-config')
+makedepends=('git' 'cmake' 'pkg-config')
 conflicts=('luastatus')
 provides=('luastatus')
 source=(git+https://github.com/shdown/luastatus)
