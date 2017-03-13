@@ -20,13 +20,11 @@ pkgver() {
 
 build() {
   cd "${srcdir}/${pkgname%-git}"
-  cmake .
+  cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib .
   make
 }
 
 package() {
   cd "${srcdir}/${pkgname%-git}"
   make DESTDIR="$pkgdir" install
-  install -Dm644 LICENSE.txt "$pkgdir/usr/share/licenses/${pkgname%-git}/LICENSE.txt"
-  make clean
 }
